@@ -36,18 +36,28 @@ const checkCarPayload = (req, res, next) => {
 };
 
 const checkVinNumberValid = (req, res, next) => {
-  const isVinValid = vinValidator.validate(req.body.vin)
-  if(isVinValid) {
-    next()
+  const isVinValid = vinValidator.validate(req.body.vin);
+  if (isVinValid) {
+    next();
   } else {
-    next({message: `vin ${req.body.vin} is invalid`})
+    next({ message: `vin ${req.body.vin} is invalid` });
   }
 };
 
-const checkVinNumberUnique = (req, res, next) => {
-  // DO YOUR MAGIC
+const checkVinNumberUnique = async (req, res, next) => {
+  try {
+    const car = await Cars.getByVin(req.body.vin);
+    if (!car) {
+      next();
+    } else {
+      next({ message: `vin ${req.body.vin} already exists`, status: 400 });
+    }
+  } catch (err) {
+    next(err);
+  }
 };
 
+//eslint-disable-next-line
 const errorHandler = (err, req, res, next) => {
   res.status(err.status || 500).json({
     message: err.message,
