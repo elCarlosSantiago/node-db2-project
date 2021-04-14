@@ -1,7 +1,7 @@
 exports.seed = function (knex) {
   return knex('cars')
     .truncate()
-    .then(function () {
+    .then(() => {
       return knex('cars').insert([
         {
           vin: '4S3BJ6321N6900903',
