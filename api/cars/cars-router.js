@@ -30,25 +30,18 @@ router.post(
   }
 );
 
-router.put(
-  '/:id',
-  md.checkCarPayload,
-  md.checkVinNumberValid,
-  async (req, res, next) => {
-    try {
-      const updatedCar = await Cars.updateById(req.params.id, req.body);
-      res.json(updatedCar);
-    } catch (err) {
-      next(err);
-    }
-  }
-);
-
-router.delete('/:id', async (req, res, next) => {
+router.put('/:id', md.checkCarPayload, md.checkVinNumberValid, async (req, res, next) => {
   try {
+    const updatedCar = await Cars.updateById(req.params.id, req.body);
+    res.json(updatedCar);
   } catch (err) {
     next(err);
   }
+});
+
+router.delete('/:id', md.checkCarId, async (req, res) => {
+  const toBeDeleted = await Cars.deleteById(req.params.id);
+  res.json(toBeDeleted);
 });
 
 router.use(md.errorHandler);

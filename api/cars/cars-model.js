@@ -17,9 +17,22 @@ const getByVin = async (vin) => {
   return db('cars').where({ vin }).first();
 };
 
+const updateById = async (id, car) => {
+  await db('cars').where('car_id', id).update(car);
+  return getById(id);
+};
+
+const deleteById = async (id) => {
+  const toBeDeleted = await getById(id);
+  await db('cars').where('car_id', id).del();
+  return toBeDeleted;
+};
+
 module.exports = {
   getAll,
   getById,
   create,
   getByVin,
+  updateById,
+  deleteById
 };
