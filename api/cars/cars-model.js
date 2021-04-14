@@ -9,7 +9,7 @@ const getById = (id) => {
 };
 
 const create = async (car) => {
-  const [id] = await db('cars').insert(car, ['cara_id']);
+  const [id] = await db('cars').insert(car, ['car_id']);
   return getById(id);
 };
 
