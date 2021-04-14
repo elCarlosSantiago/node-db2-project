@@ -15,12 +15,20 @@ router.get('/:id', md.checkCarId, async (req, res) => {
   res.json(req.car);
 });
 
-// router.post('/', async (req, res, next) => {
-//   try {
-//   } catch (err) {
-//     next(err);
-//   }
-// });
+router.post(
+  '/',
+  md.checkCarPayload,
+  md.checkVinNumberValid,
+  md.checkVinNumberUnique,
+  async (req, res, next) => {
+    try {
+      const newCar = await Cars.create(req.body);
+      res.status(201).json(newCar);
+    } catch (err) {
+      next(err);
+    }
+  }
+);
 
 // router.put('/:id', async (req, res, next) => {
 //   try {
