@@ -10,26 +10,31 @@ router.get('/', async (req, res, next) => {
     next(err);
   }
 });
-router.get('/:id', md.checkCarId, async (req, res, next) => {
+
+router.get('/:id', md.checkCarId, async (req, res) => {
   res.json(req.car);
 });
-router.post('/', async (req, res, next) => {
-  try {
-  } catch (err) {
-    next(err);
-  }
-});
-router.put('/:id', async (req, res, next) => {
-  try {
-  } catch (err) {
-    next(err);
-  }
-});
-router.delete('/:id', async (req, res, next) => {
-  try {
-  } catch (err) {
-    next(err);
-  }
-});
+
+// router.post('/', async (req, res, next) => {
+//   try {
+//   } catch (err) {
+//     next(err);
+//   }
+// });
+
+// router.put('/:id', async (req, res, next) => {
+//   try {
+//   } catch (err) {
+//     next(err);
+//   }
+// });
+// router.delete('/:id', async (req, res, next) => {
+//   try {
+//   } catch (err) {
+//     next(err);
+//   }
+// });
+
+router.use(md.errorHandler);
 
 module.exports = router;
